@@ -25,10 +25,7 @@ namespace Ejer4
                     resultado = 0;
                     for (int i = 0; i < numeros.Length; i++)
                     {
-                        Console.WriteLine(numeros[i]);
-                        resultado =resultado+(double)numeros[i];
-                        Console.WriteLine("result: " +resultado);
-                        
+                       
                     }
                     break;
                 case '-':
