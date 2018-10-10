@@ -13,10 +13,10 @@ namespace Bol3
         static void Main(string[] args)
         {
             Hashtable equipos = new Hashtable();
-            equipos.Add("192.168.0.21", 8);
-            equipos.Add("192.168.201.210", 4);
-            equipos.Add("192.168.0.2", 12);
-            equipos.Add("192.168.200.1", 6);
+            //equipos.Add("192.168.0.21", 8);
+            //equipos.Add("192.168.201.210", 4);
+            //equipos.Add("192.168.0.2", 12);
+            //equipos.Add("192.168.200.1", 6);
 
             int eleccion = -1;
             Ejer1 ejer1 = new Ejer1();
@@ -31,7 +31,10 @@ namespace Bol3
                 {
                     eleccion = Convert.ToInt32(Console.ReadLine());
                 }
-                catch { }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Debes introducir un valor valido\n");
+                }
 
                 switch (eleccion)
                 {
@@ -46,9 +49,6 @@ namespace Bol3
                         break;
                     case 4:
                         break;
-                    default:
-                        Console.WriteLine("Introduce un valor valido\n");
-                        break;
                 }
 
             } while (eleccion != 4);
@@ -56,33 +56,34 @@ namespace Bol3
 
         public Hashtable IntroducirDatos(Hashtable equipos)
         {
-            string ip;
+            string ip="";
             int cantidad = 0;
-            bool error = false;
+            do
+            {
+                ip = pedirIP(equipos, true);
+            } while (ip.Length ==0);
             do
             {
                 try
                 {
-                    ip = pedirIP(equipos,true);
                     Console.WriteLine("Introduce la cantidad de memoria, en GB");
                     cantidad = Convert.ToInt32(Console.ReadLine());
                     if (cantidad < 0)
                     {
                         Console.WriteLine("Memoria invalida");
-                        throw new Exception("Memoria incorrecta");
                     }
-                    error = false;
-                    //Console.WriteLine(ip);
-                    equipos.Add(ip, cantidad);
-                    Console.WriteLine("Se ha añadido la ip: " + ip + " con una memoria de " + cantidad + " GB");
-                    Console.WriteLine();
                 }
-                catch (Exception e)
+                catch (FormatException)
                 {
-                    //Console.WriteLine(e.ToString());
-                    error = true;
+                    Console.WriteLine("Debes introducir un valor valido");
+                }catch (OverflowException)
+                {
+                    Console.WriteLine("El valor es demasiado alto");
                 }
-            } while (error);
+            } while (cantidad == 0);
+            equipos.Add(ip, cantidad);
+            Console.WriteLine("Se ha añadido la ip: " + ip + " con una memoria de " + cantidad + " GB");
+            Console.WriteLine();
             return equipos;
         }
 
@@ -98,20 +99,27 @@ namespace Bol3
 
         public void visualizarElemento(Hashtable datos)
         {
-            String ip=pedirIP(datos,false);
-            if (datos.Contains(ip))
+            if (datos.Keys.Count > 0)
             {
-                foreach (DictionaryEntry entry in datos)
+                String ip = pedirIP(datos, false);
+                if (datos.Contains(ip))
                 {
-                    if (entry.Key.Equals(ip))
+                    foreach (DictionaryEntry entry in datos)
                     {
-                        Console.WriteLine("IP: {0,15} Memoria: {1,2} GB\n", entry.Key, entry.Value);
+                        if (entry.Key.Equals(ip))
+                        {
+                            Console.WriteLine("IP: {0,15} Memoria: {1,2} GB\n", entry.Key, entry.Value);
+                        }
                     }
+                }
+                else
+                {
+                    Console.WriteLine("No existe\n");
                 }
             }
             else
             {
-                Console.WriteLine("No existe\n");
+                Console.WriteLine("No hay elementos\n");
             }
         }
 
@@ -124,7 +132,7 @@ namespace Bol3
             if (!banderaIp || ip.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).Length != 4)
             {
                 Console.WriteLine("Ip invalida\n");
-                throw new Exception("IP invalida");
+                ip = "";
             }
             else
             {

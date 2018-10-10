@@ -55,7 +55,10 @@ namespace Ejer3
                 {
                     eleccion = Convert.ToInt32(Console.ReadLine());
                 }
-                catch { }
+                catch
+                {
+                    Console.WriteLine("Error al introducir un numero\n");
+                }
                 switch (eleccion)
                 {
                     case 1:
@@ -147,7 +150,10 @@ namespace Ejer3
                     {
                         borrado = Convert.ToInt32(Console.ReadLine()) - 1;
                     }
-                    catch { }
+                    catch
+                    {
+                        Console.WriteLine("Error al introducir un numero\n");
+                    }
                     if (borrado < 0 || borrado >= Juegos.Count())
                     {
                         bandera = true;
@@ -178,7 +184,10 @@ namespace Ejer3
                 {
                     confirmacion = Convert.ToInt32(Console.ReadLine());
                 }
-                catch { }
+                catch
+                {
+                    Console.WriteLine("Error al introducir un numero\n");
+                }
                 if (confirmacion == 0)
                 {
                     Juegos.Clear();
@@ -214,10 +223,10 @@ namespace Ejer3
             {
                 cont++;
                 cont2++;
-                if (cont2 >= 10)
+                if (cont2 >= 11)
                 {
-                    Console.WriteLine("Pulsa una tela para continuar");
-                    Console.ReadKey();
+                    Console.WriteLine("Pulsa una tecla para continuar");
+                    Console.ReadKey(true);
                     cont2 = 0;
                 }
                 Console.WriteLine("{0,2} Titulo:{1,12} Año:{2,5} Estilo: {3,14} Fabricante:{4,10}", cont, juego.Nombre, juego.año, juego.estilo, juego.Fabricante);
@@ -264,7 +273,7 @@ namespace Ejer3
                     Estilo estilo = (Estilo)Convert.ToInt32(Console.ReadLine());
                     foreach (Juego juego in Juegos)
                     {
-                        if (añoComprobar == juego.año && estilo==juego.estilo)
+                        if (añoComprobar == juego.año && estilo == juego.estilo)
                         {
                             cont++;
                             Console.WriteLine("{0} Titulo:{1,8} Año:{2,5} Estilo:{3,8} Fabricante:{4,8}\n", cont, juego.Nombre, juego.año, juego.estilo, juego.Fabricante);
@@ -272,7 +281,10 @@ namespace Ejer3
                     }
                     Console.WriteLine("Hay " + cont + " juegos");
                 }
-                catch { }
+                catch
+                {
+                    Console.WriteLine("Error al introducir un numero\n");
+                }
             }
             else
             {

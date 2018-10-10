@@ -11,31 +11,79 @@ namespace Ejer4
         static void Main(string[] args)
         {
             Ejer4 ejer = new Ejer4();
-            Console.WriteLine((int)ejer.calculo('+', "2346"));
+
+
+            Console.WriteLine("Suma: " + ejer.Calculo('+', 2, 3, 4));
+            Console.WriteLine("Resta: " + ejer.Calculo('-', 2, 3, 4));
+            Console.WriteLine("Multiplicacion: " + ejer.Calculo('*', 2, 3, 4));
+            Console.WriteLine("Multiplicacion sin valores: " + ejer.Calculo('*'));
+
+            double valorDivision = ejer.Calculo('/', 2, 3, 4,0);
+            if (valorDivision == 0)
+            {
+                Console.WriteLine("No se puede dividir entre 0");
+            }
+            else
+            {
+                Console.WriteLine("Division: " + valorDivision);
+            }
+            valorDivision = ejer.Calculo('/', 2, 3, 4);
+            if (valorDivision == 0)
+            {
+                Console.WriteLine("No se puede dividir entre 0");
+            }
+            else
+            {
+                Console.WriteLine("Division: " + valorDivision);
+            }
+
+            Console.WriteLine("\nNo calculo sin simbolo " + ejer.Calculo('3', 2, 3, 4));
             Console.ReadKey();
         }
 
 
-        public double calculo(char simbolo, String numeros)
+        public double Calculo(char simbolo, params int[] parametros)
         {
-            double resultado = -1;
-            switch (simbolo)
+            double resultado = 0;
+            if (parametros.Length != 0)
             {
-                case '+':
-                    resultado = 0;
-                    for (int i = 0; i < numeros.Length; i++)
-                    {
-                       
-                    }
-                    break;
-                case '-':
-                    break;
-                case '*':
-                    break;
-                case '/':
-                    break;
-                default:
-                    break;
+                switch (simbolo)
+                {
+                    case '+':
+                        resultado = parametros[0];
+                        for (int i = 1; i < parametros.Length; i++)
+                        {
+                            resultado += parametros[i];
+                        }
+                        break;
+                    case '-':
+                        resultado = parametros[0];
+                        for (int i = 1; i < parametros.Length; i++)
+                        {
+                            resultado -= parametros[i];
+                        }
+                        break;
+                    case '*':
+                        resultado = parametros[0];
+                        for (int i = 1; i < parametros.Length; i++)
+                        {
+                            resultado = resultado * parametros[i];
+                        }
+                        break;
+                    case '/':
+                        resultado = parametros[0];
+                        for (int i = 1; i < parametros.Length; i++)
+                        {
+                            if (parametros[i] == 0)
+                            {
+                                return 0;
+                            }
+                            resultado /= parametros[i];
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
 
             return resultado;
