@@ -35,7 +35,6 @@ namespace Ejer2
             int[,] notas = crearNotasAleatorias();
         }
 
-        //Acabado
         public double mediaGlobal()
         {
             double mediaGlobal;
@@ -50,7 +49,7 @@ namespace Ejer2
             mediaGlobal = (double)sumaTotal / (notas.GetLength(0) * notas.GetLength(1));
             return mediaGlobal;
         }
-        //Acabado
+        
         public double mediaAlumno(int idAlumno)
         {
             int sumaNota = 0;
@@ -64,7 +63,7 @@ namespace Ejer2
 
             return mediaAlumno;
         }
-        //Acabado
+
         public double mediaMateria(int idMateria)
         {
             int sumaNota = 0;
@@ -79,7 +78,6 @@ namespace Ejer2
             return mediaMateria;
         }
 
-        //Acabado
         public void verTabla()
         {
             Console.Write("{0,9}"," ");
@@ -100,7 +98,7 @@ namespace Ejer2
             Console.WriteLine();
 
         }
-        //Acabado
+
         public static int[,] crearNotasAleatorias()
         {
             Random rand = new Random();

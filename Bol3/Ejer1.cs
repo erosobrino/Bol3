@@ -10,6 +10,7 @@ namespace Bol3
 {
     class Ejer1
     {
+        //Validado
         static void Main(string[] args)
         {
             Hashtable equipos = new Hashtable();
@@ -35,6 +36,10 @@ namespace Bol3
                 {
                     Console.WriteLine("Debes introducir un valor valido\n");
                 }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("El valor es demasiado alto");
+                }
 
                 switch (eleccion)
                 {
@@ -56,12 +61,12 @@ namespace Bol3
 
         public Hashtable IntroducirDatos(Hashtable equipos)
         {
-            string ip="";
+            string ip = "";
             int cantidad = 0;
             do
             {
                 ip = pedirIP(equipos, true);
-            } while (ip.Length ==0);
+            } while (ip.Length == 0);
             do
             {
                 try
@@ -76,7 +81,8 @@ namespace Bol3
                 catch (FormatException)
                 {
                     Console.WriteLine("Debes introducir un valor valido");
-                }catch (OverflowException)
+                }
+                catch (OverflowException)
                 {
                     Console.WriteLine("El valor es demasiado alto");
                 }

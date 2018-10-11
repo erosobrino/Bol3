@@ -13,7 +13,7 @@ namespace Bol3
         static void Main(string[] args)
         {
             Aula aula = new Aula();
-            //Console.WriteLine(aula[0, 0]);
+            Ejer2 ejer = new Ejer2();
             int eleccion = -1;
             do
             {
@@ -29,9 +29,13 @@ namespace Bol3
                 {
                     eleccion = Convert.ToInt32(Console.ReadLine());
                 }
-                catch (Exception)
+                catch (FormatException)
                 {
                     Console.WriteLine("Debes introducir un valor valido\n");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("El valor es demasiado alto");
                 }
                 switch (eleccion)
                 {
@@ -39,20 +43,32 @@ namespace Bol3
                         Console.WriteLine("La media es: {0:N3}\n", aula.mediaGlobal());
                         break;
                     case 2:
-                        Console.WriteLine("Introduce el ID del alumno, (1-{0})", aula.alumnos.Length);
-                        int idAlumno = Convert.ToInt32(Console.ReadLine());
+                        int idAlumno;
+                        do
+                        {
+                            Console.WriteLine("Introduce el ID del alumno, (1-{0})", aula.alumnos.Length);
+                            idAlumno = ejer.pedirNumero(aula.alumnos.Length);
+                        } while (idAlumno == -1);
                         idAlumno--;
                         Console.WriteLine("La media de {0} es: {1:N3}\n", aula.alumnos[idAlumno], aula.mediaAlumno(idAlumno));
                         break;
                     case 3:
-                        Console.WriteLine("Introduce el ID de materia, (1-{0})", aula.notas.GetLength(1));
-                        int idMateria = Convert.ToInt32(Console.ReadLine());
+                        int idMateria;
+                        do
+                        {
+                            Console.WriteLine("Introduce el ID de materia, (1-{0})", aula.notas.GetLength(1));
+                            idMateria = ejer.pedirNumero(aula.notas.GetLength(1));
+                        } while (idMateria == -1);
                         idMateria--;
                         Console.WriteLine("La media de {0} es: {1:N3}\n", (asignaturas)idMateria, aula.mediaMateria(idMateria));
                         break;
                     case 4:
-                        Console.WriteLine("Introduce el ID del alumno, (1-{0})", aula.alumnos.Length);
-                        int idAlumno2 = Convert.ToInt32(Console.ReadLine());
+                        int idAlumno2;
+                        do
+                        {
+                            Console.WriteLine("Introduce el ID del alumno, (1-{0})", aula.alumnos.Length);
+                            idAlumno2 = ejer.pedirNumero(aula.alumnos.Length);
+                        } while (idAlumno2 == -1);
                         idAlumno2--;
                         Console.Write("{0,9}", " ");
                         for (int i = 0; i < aula.notas.GetLength(1); i++)
@@ -68,32 +84,40 @@ namespace Bol3
                         Console.WriteLine("\n");
                         break;
                     case 5:
-                        Console.WriteLine("Introduce el ID de materia, (1-{0})", aula.notas.GetLength(1));
-                        int idMateria2 = Convert.ToInt32(Console.ReadLine());
+                        int idMateria2;
+                        do
+                        {
+                            Console.WriteLine("Introduce el ID de materia, (1-{0})", aula.notas.GetLength(1));
+                            idMateria2 = ejer.pedirNumero(aula.notas.GetLength(1));
+                        } while (idMateria2 == -1);
                         idMateria2--;
                         Console.Write("{0,9}", " ");
                         Console.WriteLine((asignaturas)idMateria2);
                         for (int i = 0; i < aula.notas.GetLength(0); i++)
                         {
-                            Console.WriteLine("{0,7} {1,7}", aula.alumnos[i],aula[i,idMateria2]);
+                            Console.WriteLine("{0,7} {1,7}", aula.alumnos[i], aula[i, idMateria2]);
                         }
                         Console.WriteLine();
                         break;
                     case 6:
                         //Max y min alumnofalla
-                        Console.WriteLine("Introduce el ID del alumno, (1-{0})", aula.alumnos.Length);
-                        int idAlumno3 = Convert.ToInt32(Console.ReadLine());
+                        int idAlumno3;
+                        do
+                        {
+                            Console.WriteLine("Introduce el ID del alumno, (1-{0})", aula.alumnos.Length);
+                            idAlumno3 = ejer.pedirNumero(aula.alumnos.Length);
+                        } while (idAlumno3 == -1);
                         idAlumno3--;
                         int notaMax = 0;
                         int notaMin = 10;
                         for (int i = 0; i < aula.notas.GetLength(1); i++)
                         {
                             int nota = aula[idAlumno3, i];
-                            if (nota>notaMax)
+                            if (nota > notaMax)
                             {
                                 notaMax = nota;
                             }
-                            if (nota<notaMin)
+                            if (nota < notaMin)
                             {
                                 notaMin = nota;
                             }
@@ -113,6 +137,29 @@ namespace Bol3
 
 
             } while (eleccion != 8);
+        }
+
+        public int pedirNumero(int max)
+        {
+            int eleccion = -1;
+            try
+            {
+                eleccion = Convert.ToInt32(Console.ReadLine());
+                if (eleccion<1 || eleccion > max)
+                {
+                    Console.WriteLine("El valor no esta en el rango");
+                    eleccion = -1;
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Debes introducir un valor valido\n");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("El valor es demasiado alto");
+            }
+            return eleccion;
         }
     }
 }
